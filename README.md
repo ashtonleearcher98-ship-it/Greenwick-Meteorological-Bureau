@@ -1,6 +1,6 @@
 # Greenwick Meteorological Bureau
 
-A responsive, dependency-free weather site for the Commonwealth of Greenwick. It covers all 42 supplied electorates, with a 200-day cache for each location. The Forecast page displays only the next ten days, with no forward paging. The separate Warnings and Cities pages provide national alert filtering and a searchable town directory.
+A responsive, dependency-free weather site for the Commonwealth of Greenwick. It covers 43 electorates, with a 200-day cache for each location. The Forecast page displays only the next ten days, with no forward paging. The separate Warnings, Cities and Legal Information pages provide national alert filtering, a searchable town directory and service terms.
 
 ## Run locally
 
@@ -19,7 +19,7 @@ In the repository, open **Settings → Pages** and set the source to **GitHub Ac
 
 ## Forecast and warning model
 
-`data/forecasts-200.json` is generated deterministically by `scripts/generate_forecasts.py` during local builds and GitHub Actions deployments. It includes all 42 electorates and 200 consecutive dates beginning on the current date in `America/Belize` (GMT−6). The model uses local climate profiles, wet-spell persistence, seasonal temperature and rainfall cycles, and several regional weather systems. The scheduled Pages workflow refreshes the deployed cache daily.
+`data/forecasts-200.json` is generated deterministically by `scripts/generate_forecasts.py` during local builds and GitHub Actions deployments. It includes all 43 electorates and 200 consecutive dates beginning on the current date in `America/Belize` (GMT−6). The model uses local climate profiles, wet-spell persistence, seasonal temperature and rainfall cycles, and several regional weather systems. The scheduled Pages workflow refreshes the deployed cache daily.
 
 Warnings are computed from cached conditions, including heavy rain and three-day rainfall totals, thunderstorms, tropical lows, damaging winds, fire danger, heatwaves, frost, high UV and short dry spells. Thresholds are defined in `weather-core.js` and can be adjusted for the Greenwick setting.
 
