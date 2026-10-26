@@ -1,4 +1,4 @@
-name: Refresh Greenwick forecast cache
+name: Build and deploy Greenwick Bureau site
 on:
   push:
     branches: [main]
@@ -6,25 +6,25 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
 jobs:
-  refresh-cache:
+  build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Generate and package forecasts
+        run: python3 scripts/generate_forecasts.py && python3 build.py
+      - uses: actions/upload-pages-artifact@v3
         with:
-          ref: main
-          fetch-depth: 0
-      - name: Generate the next 200 days
-        run: python3 scripts/generate_forecasts.py
-      - name: Save the updated cache to the Pages branch
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/forecasts-200.json
-          if git diff --cached --quiet; then
-            echo "Forecast cache is already current."
-          else
-            git commit -m "Refresh 200-day Greenwick forecast cache"
-            git push origin HEAD:main
-          fi
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
