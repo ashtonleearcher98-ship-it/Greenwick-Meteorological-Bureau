@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3672">
+  <meta name="description" content="Daily weather forecasts and weather warnings for every electorate in Greenwick.">
+  <title>Greenwick Meteorological Bureau | Forecast</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="pages.css">
+  <script src="weather-core.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Greenwick Meteorological Bureau home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 3 36 12v16L20 37 4 28V12L20 3Z"/><path d="M9 22h22M12 17h16M15 12h10M15 27h10M18 32h4"/></svg></span>
+      <span><b>Greenwick</b><small>Meteorological Bureau</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-link active" href="index.html" aria-current="page">Forecast</a>
+      <a class="nav-link" href="warnings.html">Warnings <span class="nav-count" id="nav-warning-count">—</span></a>
+      <a class="nav-link" href="cities.html">Cities</a>
+    </nav>
+    <div class="top-actions"><div class="time-chip"><b data-local-date>Loading date…</b><small>GREENWICK TIME · GMT−6 <span data-local-time></span></small></div><button class="icon-button" id="units-toggle" title="Toggle temperature units" aria-label="Toggle temperature units">°C</button></div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="forecast">
+      <div class="hero-contours" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy"><p class="eyebrow">COMMONWEALTH OF GREENWICK</p><h1>Weather that<br><span>keeps you ready.</span></h1><p>Local forecasts and weather warnings for every Greenwick electorate.</p></div>
+        <div class="hero-tools">
+          <label class="search-label" for="electorate-search">Find an electorate or city</label>
+          <div class="search-wrap"><span aria-hidden="true">⌕</span><input id="electorate-search" type="search" placeholder="Search town or electorate" autocomplete="off"><kbd>Ctrl K</kbd></div>
+          <div class="quick-links"><a href="warnings.html"><span class="quick-icon warning-icon">!</span> Current warnings <span id="hero-warning-count">0</span></a><a href="cities.html"><span class="quick-icon">⌖</span> City directory</a></div>
+          <div class="search-results" id="search-results" role="listbox" aria-label="Electorate search results" hidden></div>
+        </div>
+      </div>
+      <div class="hero-bottom"><span><i class="live-dot"></i> GREENWICK WEATHER SERVICE</span><span id="cache-status">200-DAY OUTLOOK CACHED</span></div>
+    </section>
+
+    <section class="content-shell">
+      <div class="location-line">
+        <div><div class="breadcrumb">FORECAST <span>/</span> <b id="breadcrumb-area">Silvershore</b></div><h2 id="location-title">Port Silver</h2><p id="location-meta">Silvershore electorate · Coast &amp; Islands district</p></div>
+        <label class="select-wrap"><span class="sr-only">Select electorate</span><select id="electorate-select"></select><span aria-hidden="true">⌄</span></label>
+      </div>
+
+      <div class="dashboard-grid">
+        <section class="current-card" aria-labelledby="current-heading">
+          <div class="current-art" aria-hidden="true"><div class="sun"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div><div class="rain rain-one"></div><div class="rain rain-two"></div><div class="art-horizon"></div></div>
+          <div class="current-top"><div><p class="eyebrow pale">LOCAL CONDITIONS</p><h3 id="current-heading">Today</h3><p id="current-date">Loading date…</p></div><div class="current-weather-icon" id="current-icon" aria-hidden="true">☀</div></div>
+          <div class="temperature"><span id="current-temp">27</span><sup>°</sup><span class="temp-unit">C</span></div>
+          <p class="condition" id="current-condition">Mostly sunny</p>
+          <p class="feels">Feels like <b id="current-feels">29°</b></p>
+          <div class="sun-times"><span><i>↗</i> Sunrise <b id="sunrise">5:18 am</b></span><span><i>↘</i> Sunset <b id="sunset">6:06 pm</b></span></div>
+          <div class="current-foot"><span><i class="live-dot"></i> Model updated <b id="updated-time">—</b> GMT−6</span><span class="location-code" id="location-code">GW 01</span></div>
+        </section>
+
+        <div class="right-column">
+          <section class="warning-card" id="warnings" aria-labelledby="warnings-heading">
+            <div class="section-heading warning-heading"><div class="alert-symbol">!</div><div><p class="eyebrow">BE PREPARED</p><h3 id="warnings-heading">Weather warnings</h3></div><a class="text-link" href="warnings.html">Warning centre <span>→</span></a></div>
+            <div id="warning-summary" class="warning-summary"></div>
+            <div id="warning-list" class="warning-list"></div>
+            <div class="no-warnings" id="no-warnings" hidden><span>✓</span><div><b>No warnings for this electorate</b><small>Forecast conditions are below the alert thresholds for the next ten days.</small></div></div>
+          </section>
+          <section class="details-card" aria-labelledby="details-heading"><div class="section-heading"><div><p class="eyebrow">AT A GLANCE</p><h3 id="details-heading">Selected day</h3></div><span class="details-date" id="details-date">—</span></div>
+            <div class="metrics-grid">
+              <div class="metric"><span class="metric-icon">◌</span><span class="metric-label">Humidity</span><b id="humidity">68%</b><div class="metric-track"><i id="humidity-bar"></i></div></div>
+              <div class="metric"><span class="metric-icon">≋</span><span class="metric-label">Wind</span><b><span id="wind">14</span> <small>km/h</small></b><div class="metric-note">Gusts <span id="gust">23</span> km/h</div></div>
+              <div class="metric"><span class="metric-icon">☂</span><span class="metric-label">Rain chance</span><b><span id="rain-prob">20</span><small>%</small></b><div class="metric-track"><i id="rain-bar"></i></div></div>
+              <div class="metric"><span class="metric-icon">☀</span><span class="metric-label">UV index</span><b><span id="uv">5</span> <small id="uv-level">Moderate</small></b><div class="uv-scale"><i></i><i></i><i></i><i></i><i></i></div></div>
+              <div class="metric"><span class="metric-icon">◒</span><span class="metric-label">Rainfall</span><b><span id="rain-mm">0.0</span> <small>mm</small></b><div class="metric-note">Expected on selected day</div></div>
+              <div class="metric"><span class="metric-icon">♨</span><span class="metric-label">Fire danger</span><b id="fire-danger">Moderate</b><div class="metric-note">Forecast rating</div></div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <section class="outlook-section" id="outlook" aria-labelledby="outlook-heading">
+        <div class="outlook-heading"><div><p class="eyebrow">PLAN AHEAD</p><h2 id="outlook-heading">10-day forecast</h2><p id="outlook-caption">The next ten days · Greenwick local dates (GMT−6)</p></div><span class="range-label">NEXT 10 DAYS</span></div>
+        <div class="forecast-strip" id="forecast-strip"></div>
+        <div class="outlook-note"><span class="info-icon">i</span><span>Only the next ten days are shown. Select a day to see its details. Rain and risk values are model estimates.</span><a href="warnings.html" class="subtle-button">Check warnings <span>→</span></a></div>
+      </section>
+
+      <section class="electorates-section" id="electorates"><div class="section-heading"><div><p class="eyebrow">GREENWICK WIDE</p><h2>Forecasts by electorate</h2><p class="section-subtitle">Choose an electorate for its local conditions and ten-day outlook.</p></div><span class="electorate-count">42 ELECTORATES</span></div><div class="electorate-chips" id="electorate-chips"></div></section>
+    </section>
+  </main>
+  <footer><div class="footer-brand"><span class="brand-mark small"><svg viewBox="0 0 40 40"><path d="M20 3 36 12v16L20 37 4 28V12L20 3Z"/><path d="M9 22h22M12 17h16M15 12h10M15 27h10M18 32h4"/></svg></span><div><b>Greenwick Meteorological Bureau</b><small>Local forecasts and weather warnings</small></div></div><div class="footer-note"><b>Weather model guidance</b><span>Forecasts are generated from a deterministic weather simulation and may change as the model is refreshed. Follow official emergency directions.</span></div><a href="#top" class="back-top">Back to top ↑</a></footer>
+</body>
+</html>
