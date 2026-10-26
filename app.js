@@ -12,7 +12,8 @@ function populate(){
 }
 function render(){
   const loc=dataset.locations.find(x=>x.electorate===activeArea)||dataset.locations[0];
-  const d=loc.days[selectedDay];
+  const firstDay=W.currentDayIndex(loc.days);
+  const d=loc.days[firstDay+selectedDay];
   areaSelect.value=loc.electorate;
   $('breadcrumb-area').textContent=loc.electorate;$('location-title').textContent=loc.town;
   $('location-meta').textContent=`${loc.electorate} electorate · ${loc.district} district`;$('location-code').textContent=`GW ${String(loc.code).padStart(2,'0')}`;
@@ -29,7 +30,7 @@ function render(){
   $('warning-summary').textContent=warnings.length?`${warnings.length} alert${warnings.length===1?'':'s'} for ${loc.electorate} over the next ten days.`:`No alerts forecast for ${loc.electorate} over the next ten days.`;
   $('warning-list').innerHTML=warnings.slice(0,4).map(w=>`<div class="warning-item ${w.severity==='Severe'?'severe':''}"><span class="warning-level"></span><div><b>${w.label} · ${W.formatDate(w.date,{weekday:'short',day:'numeric',month:'short'})}</b><small>${w.detail}</small></div><span class="w-icon" aria-hidden="true">${w.icon}</span></div>`).join('');
   $('warning-list').hidden=!warnings.length;$('no-warnings').hidden=Boolean(warnings.length);
-  $('forecast-strip').innerHTML=loc.days.slice(0,10).map((day,index)=>{const dayWarnings=W.warningsFor(loc,index);return `<button class="day-card${selectedDay===index?' selected':''}" data-index="${index}" aria-label="${W.formatDate(day.date)}: ${day.condition}, high ${tempValue(day.maxC)} degrees, low ${tempValue(day.minC)} degrees${dayWarnings.length?', weather warning':''}">${dayWarnings.length?'<span class="forecast-warn" title="Warning threshold reached">!</span>':''}<div class="day-name">${index===0?'TODAY':W.formatDate(day.date,{weekday:'short'}).toUpperCase()}</div><div class="day-date">${W.formatDate(day.date,{day:'numeric',month:'short'})}</div><div class="day-icon" aria-hidden="true">${W.iconFor(day.condition)}</div><div class="day-temps"><b>${tempValue(day.maxC)}°</b><span>${tempValue(day.minC)}°</span></div><div class="day-rain${day.rainChance<20?' none':''}">☂ ${day.rainChance}%</div></button>`}).join('');
+  $('forecast-strip').innerHTML=loc.days.slice(firstDay,firstDay+10).map((day,index)=>{const dayWarnings=W.warningsFor(loc,firstDay+index);return `<button class="day-card${selectedDay===index?' selected':''}" data-index="${index}" aria-label="${W.formatDate(day.date)}: ${day.condition}, high ${tempValue(day.maxC)} degrees, low ${tempValue(day.minC)} degrees${dayWarnings.length?', weather warning':''}">${dayWarnings.length?'<span class="forecast-warn" title="Warning threshold reached">!</span>':''}<div class="day-name">${index===0?'TODAY':W.formatDate(day.date,{weekday:'short'}).toUpperCase()}</div><div class="day-date">${W.formatDate(day.date,{day:'numeric',month:'short'})}</div><div class="day-icon" aria-hidden="true">${W.iconFor(day.condition)}</div><div class="day-temps"><b>${tempValue(day.maxC)}°</b><span>${tempValue(day.minC)}°</span></div><div class="day-rain${day.rainChance<20?' none':''}">☂ ${day.rainChance}%</div></button>`}).join('');
   document.querySelectorAll('.day-card').forEach(el=>el.addEventListener('click',()=>{selectedDay=Number(el.dataset.index);render()}));
   document.querySelectorAll('.electorate-chip').forEach(el=>el.classList.toggle('active',el.dataset.area===loc.electorate));
   const national=W.allWarnings(dataset.locations,10);$('nav-warning-count').textContent=national.length;$('hero-warning-count').textContent=national.length;
