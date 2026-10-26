@@ -15,7 +15,7 @@ Then visit `http://localhost:8000`.
 
 ## Publish with GitHub Pages
 
-The included workflow builds the static site and publishes the `dist/` folder when changes are pushed to `main`. In GitHub, enable Pages with **GitHub Actions** as the build and deployment source.
+In the repository, open **Settings → Pages** and choose **Deploy from a branch**, then select `main` and `/(root)`. The included workflow refreshes the 200-day cache daily and commits the updated JSON to `main`; GitHub Pages then republishes it with the site files. The workflow can also be run manually from the Actions tab.
 
 ## Forecast and warning model
 
