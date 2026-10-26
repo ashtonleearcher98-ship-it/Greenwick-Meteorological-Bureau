@@ -23,7 +23,7 @@ function render(){
   $('humidity').textContent=`${d.humidity}%`;$('humidity-bar').style.width=`${d.humidity}%`;$('wind').textContent=d.windKph;$('gust').textContent=d.gustKph;
   $('rain-prob').textContent=d.rainChance;$('rain-bar').style.width=`${d.rainChance}%`;$('uv').textContent=d.uv;
   $('uv-level').textContent=d.uv<=2?'Low':d.uv<=5?'Moderate':d.uv<=7?'High':d.uv<=10?'Very high':'Extreme';
-  $('rain-mm').textContent=d.rainMm.toFixed(1);$('fire-danger').textContent=d.fireDanger;
+  $('rain-mm').textContent=d.rainMm.toFixed(1);$('rain-mm-chance').textContent=d.rainMm.toFixed(1);$('fire-danger').textContent=d.fireDanger;
   $('details-date').textContent=W.formatDate(d.date,{weekday:'short',day:'numeric',month:'short'}).toUpperCase();
   $('updated-time').textContent=W.formatClock(new Date(dataset.generatedAt));
   const warnings=W.allWarnings([loc],10);
