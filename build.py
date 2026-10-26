@@ -8,7 +8,7 @@ DIST = ROOT / "dist"
 if DIST.exists():
     shutil.rmtree(DIST)
 DIST.mkdir()
-for name in ("index.html", "warnings.html", "cities.html", "styles.css", "pages.css", "weather-core.js", "app.js", "warnings.js", "cities.js"):
+for name in ("index.html", "warnings.html", "cities.html", "legal.html", "styles.css", "pages.css", "weather-core.js", "app.js", "warnings.js", "cities.js"):
     shutil.copy2(ROOT / name, DIST / name)
 shutil.copytree(ROOT / "assets", DIST / "assets")
 shutil.copytree(ROOT / "data", DIST / "data")
