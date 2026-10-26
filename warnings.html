@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b3672">
+  <meta name="description" content="Current Greenwick weather warnings for flooding, fire weather, storms, heat and damaging winds.">
+  <title>Weather Warnings | Greenwick Meteorological Bureau</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="pages.css">
+  <script src="weather-core.js" defer></script><script src="warnings.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 3 36 12v16L20 37 4 28V12L20 3Z"/><path d="M9 22h22M12 17h16M15 12h10M15 27h10M18 32h4"/></svg></span><span><b>Greenwick</b><small>Meteorological Bureau</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Forecast</a><a class="nav-link active" href="warnings.html" aria-current="page">Warnings</a><a class="nav-link" href="cities.html">Cities</a></nav>
+    <div class="top-actions"><div class="time-chip"><b data-local-date>Loading date…</b><small>GREENWICK TIME · GMT−6 <span data-local-time></span></small></div></div>
+  </header>
+  <main class="page-main" id="top">
+    <section class="page-hero"><div><p class="eyebrow">GREENWICK WIDE</p><h1>Weather warnings</h1><p>Current alerts across all electorates, based on the next ten days of forecast conditions.</p></div><div class="page-hero-meta"><b id="warning-horizon">NEXT 10 DAYS</b><span id="warning-dates">Loading forecast dates…</span><span class="live-dot"></span><span>GREENWICK LOCAL TIME · GMT−6</span></div></section>
+    <section class="page-content">
+      <div class="warning-stats" id="warning-stats"></div>
+      <section class="national-warning-board">
+        <div class="national-board-heading"><span class="board-alert-icon">!</span><div><small>CURRENT WARNINGS</small><h2 id="board-count">Loading alerts…</h2></div><span class="board-arrow">→</span></div>
+        <div class="national-board-body"><div class="board-intro"><b>Warnings by electorate</b><span id="board-intro-count">—</span></div><div id="warnings-by-electorate" class="electorate-warning-list"></div></div>
+      </section>
+      <section class="warning-results-section">
+        <div class="results-heading"><div><p class="eyebrow">LOCAL DETAIL</p><h2>Alert register</h2><p class="section-subtitle">Warnings are calculated from rainfall, wind, heat, humidity, UV and fire-danger values in the cached forecast.</p></div><span class="result-total" id="results-total">0 alerts</span></div>
+        <div class="filter-bar"><label>Electorate<select id="area-filter"><option value="">All electorates</option></select></label><label>Warning type<select id="type-filter"><option value="">All warning types</option></select></label><label class="filter-search">Search town<input id="warning-search" type="search" placeholder="Town or electorate"></label></div>
+        <div id="warning-results" class="warning-results"></div>
+        <div id="no-warning-results" class="empty-panel" hidden><span>✓</span><b>No matching warnings</b><small>Try another electorate or warning type.</small></div>
+      </section>
+      <p class="model-note"><b>About this warning service</b> Alerts use fixed model thresholds and are recalculated from the displayed forecast cache. Model warnings are guidance; follow Greenwick emergency service directions for urgent situations.</p>
+    </section>
+  </main>
+  <footer><div class="footer-brand"><span class="brand-mark small"><svg viewBox="0 0 40 40"><path d="M20 3 36 12v16L20 37 4 28V12L20 3Z"/><path d="M9 22h22M12 17h16M15 12h10M15 27h10M18 32h4"/></svg></span><div><b>Greenwick Meteorological Bureau</b><small>Warnings and advice for the Commonwealth</small></div></div><a href="#top" class="back-top">Back to top ↑</a></footer>
+</body>
+</html>
