@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b3672">
+  <meta name="description" content="Browse Greenwick's cities and local forecasts by electorate.">
+  <title>Cities and Electorates | Greenwick Meteorological Bureau</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="pages.css">
+  <script src="weather-core.js" defer></script><script src="cities.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 3 36 12v16L20 37 4 28V12L20 3Z"/><path d="M9 22h22M12 17h16M15 12h10M15 27h10M18 32h4"/></svg></span><span><b>Greenwick</b><small>Meteorological Bureau</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Forecast</a><a class="nav-link" href="warnings.html">Warnings</a><a class="nav-link active" href="cities.html" aria-current="page">Cities</a></nav>
+    <div class="top-actions"><div class="time-chip"><b data-local-date>Loading date…</b><small>GREENWICK TIME · GMT−6 <span data-local-time></span></small></div></div>
+  </header>
+  <main class="page-main" id="top">
+    <section class="page-hero city-hero"><div><p class="eyebrow">LOCATIONS &amp; ELECTORATES</p><h1>Greenwick cities</h1><p>Explore local forecast locations across all 42 electorates.</p></div><div class="page-hero-meta"><b>42 ELECTORATES</b><span>Local seats and forecast areas</span><span class="live-dot"></span><span>GMT−6</span></div></section>
+    <section class="page-content">
+      <div class="city-intro"><div><p class="eyebrow">GREENWICK AT A GLANCE</p><h2>One country, local weather.</h2><p>Each electorate is represented by its own named city or town. Select a place to open its current forecast and ten-day outlook.</p></div><div class="map-frame"><img src="assets/greenwick-map.svg" alt="Greenwick outline with regional divisions"></div></div>
+      <div class="city-directory-heading"><div><h2>City directory</h2><p class="section-subtitle" id="city-count">Loading 42 forecast locations…</p></div><div class="city-filters"><input type="search" id="city-search" placeholder="Find a city or electorate"><select id="district-filter"><option value="">All districts</option></select></div></div>
+      <div id="city-grid" class="city-grid"></div>
+      <div id="city-empty" class="empty-panel" hidden><span>⌕</span><b>No locations found</b><small>Try another city, electorate or district.</small></div>
+    </section>
+  </main>
+  <footer><div class="footer-brand"><span class="brand-mark small"><svg viewBox="0 0 40 40"><path d="M20 3 36 12v16L20 37 4 28V12L20 3Z"/><path d="M9 22h22M12 17h16M15 12h10M15 27h10M18 32h4"/></svg></span><div><b>Greenwick Meteorological Bureau</b><small>Local forecasts for the Commonwealth</small></div></div><a href="#top" class="back-top">Back to top ↑</a></footer>
+</body>
+</html>
