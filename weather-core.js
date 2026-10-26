@@ -44,7 +44,7 @@
     result.sort((a,b)=>a.date.localeCompare(b.date)||({Severe:0,Warning:1,Advice:2}[a.severity]-({Severe:0,Warning:1,Advice:2}[b.severity]))||a.electorate.localeCompare(b.electorate));
     return result;
   }
-  async function loadData(){const res=await fetch(DATA_URL,{cache:'no-cache'});if(!res.ok)throw new Error('Forecast cache could not be loaded.');const data=await res.json();if(data.locations?.length!==42||data.cachedDays!==200)throw new Error('The forecast cache is incomplete.');return data;}
+  async function loadData(){const res=await fetch(DATA_URL,{cache:'no-cache'});if(!res.ok)throw new Error('Forecast cache could not be loaded.');const data=await res.json();if(data.locations?.length!==43||data.cachedDays!==200)throw new Error('The forecast cache is incomplete.');return data;}
   function mountLocalDate(){
     const update=()=>{const now=new Date();document.querySelectorAll('[data-local-date]').forEach(el=>el.textContent=new Intl.DateTimeFormat('en',{timeZone:TIME_ZONE,weekday:'short',day:'numeric',month:'short',year:'numeric'}).format(now));document.querySelectorAll('[data-local-time]').forEach(el=>el.textContent=formatClock(now));};
     update();setInterval(update,60_000);
