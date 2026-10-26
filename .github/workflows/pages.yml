@@ -6,7 +6,7 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -21,8 +21,45 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Generate and package forecasts
-        run: python3 scripts/generate_forecasts.py && python3 build.py
+      - name: Generate forecasts
+        run: python3 scripts/generate_forecasts.py
+      - name: Persist cache for branch based Pages deployments
+        run: |
+          python3 - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          generated = json.loads(Path("data/forecasts-200.json").read_text())
+          try:
+              previous = json.loads(subprocess.check_output(
+                  ["git", "show", "HEAD:data/forecasts-200.json"], text=True
+              ))
+          except (subprocess.CalledProcessError, json.JSONDecodeError):
+              previous = {}
+
+          current_signature = (
+              generated.get("startDate"),
+              len(generated.get("locations", [])),
+              any(item.get("electorate") == "Westfield" for item in generated.get("locations", [])),
+          )
+          previous_signature = (
+              previous.get("startDate"),
+              len(previous.get("locations", [])),
+              any(item.get("electorate") == "Westfield" for item in previous.get("locations", [])),
+          )
+
+          if current_signature != previous_signature:
+              subprocess.run(["git", "config", "user.name", "github-actions[bot]"], check=True)
+              subprocess.run(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"], check=True)
+              subprocess.run(["git", "add", "data/forecasts-200.json"], check=True)
+              subprocess.run(["git", "commit", "-m", f"Refresh 200-day forecast cache ({generated.get('startDate')})"], check=True)
+              subprocess.run(["git", "push"], check=True)
+          else:
+              print("The checked-in forecast cache already matches today's date and electorate set.")
+          PY
+      - name: Build site
+        run: python3 build.py
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
