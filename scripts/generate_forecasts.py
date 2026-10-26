@@ -56,12 +56,13 @@ PLACES = [
     ("Harbor Heights", "Harbour Heights", "Coast & Islands", "coast"),
     ("Clearwater", "Clearwater Bay", "Lake District", "lake"),
     ("Northbridge", "Northbridge City", "Northern Forests", "river"),
+    ("Westfield", "Westfield City", "Western Ranges", "upland"),
 ]
 
 COASTS = {0, 1, 2, 5, 9, 12, 14, 17, 20, 21, 26, 30, 35, 39, 40}
 RIVERS = {5, 10, 11, 18, 27, 29, 36, 41}
 INLAND = {6, 8, 15, 16, 23, 28, 32, 34, 38}
-UPLAND = {3, 4, 7, 13, 19, 22, 24, 25, 31, 37}
+UPLAND = {3, 4, 7, 13, 19, 22, 24, 25, 31, 37, 42}
 LAKES = {9, 33, 40}
 
 def stable_rng(area_index, day_index):
