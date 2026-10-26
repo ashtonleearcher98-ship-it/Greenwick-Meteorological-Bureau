@@ -14,6 +14,7 @@
   };
   const partsDate = date => Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:TIME_ZONE,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date).filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
   const todayISO = () => {const p=partsDate(new Date());return `${p.year}-${p.month}-${p.day}`;};
+  const currentDayIndex = days => {const index=days.findIndex(day=>day.date>=todayISO());return index<0?Math.max(0,days.length-1):index;};
   const dateObj = iso => new Date(`${iso}T18:00:00Z`);
   const formatDate = (iso, opts={weekday:'long',day:'numeric',month:'long'}) => new Intl.DateTimeFormat('en', {...opts,timeZone:TIME_ZONE}).format(dateObj(iso));
   const formatClock = date => new Intl.DateTimeFormat('en',{timeZone:TIME_ZONE,hour:'numeric',minute:'2-digit'}).format(date);
@@ -39,7 +40,7 @@
   }
   function allWarnings(locations,count=10){
     const result=[];
-    for(const loc of locations)for(let i=0;i<Math.min(count,loc.days.length);i++)result.push(...warningsFor(loc,i));
+    for(const loc of locations){const first=currentDayIndex(loc.days);for(let i=first;i<Math.min(first+count,loc.days.length);i++)result.push(...warningsFor(loc,i));}
     result.sort((a,b)=>a.date.localeCompare(b.date)||({Severe:0,Warning:1,Advice:2}[a.severity]-({Severe:0,Warning:1,Advice:2}[b.severity]))||a.electorate.localeCompare(b.electorate));
     return result;
   }
@@ -49,5 +50,5 @@
     update();setInterval(update,60_000);
   }
   mountLocalDate();
-  window.GreenwickWeather={TIME_ZONE,DATA_URL,TYPES,todayISO,formatDate,formatClock,iconFor,warningsFor,allWarnings,loadData};
+  window.GreenwickWeather={TIME_ZONE,DATA_URL,TYPES,todayISO,currentDayIndex,formatDate,formatClock,iconFor,warningsFor,allWarnings,loadData};
 })();
