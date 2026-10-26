@@ -16,7 +16,7 @@ function render(){
 async function start(){try{
   data=await W.loadData();all=W.allWarnings(data.locations,10);
   fillFilters();
-  const first=data.locations[0].days[0].date,last=data.locations[0].days[9].date;
+  const firstIndex=W.currentDayIndex(data.locations[0].days),first=data.locations[0].days[firstIndex].date,last=data.locations[0].days[Math.min(firstIndex+9,data.locations[0].days.length-1)].date;
   $('warning-dates').textContent=`${W.formatDate(first,{day:'numeric',month:'short'})} – ${W.formatDate(last,{day:'numeric',month:'short',year:'numeric'})}`;
   $('board-count').textContent=`${all.length} alert${all.length===1?'':'s'} forecast`;
   const electorates=[...new Map(all.map(w=>[w.electorate,{electorate:w.electorate,town:w.town,warnings:0,highest:'Advice'}])).values()];
